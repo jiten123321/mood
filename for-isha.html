@@ -1,0 +1,1307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>For Isha · A Little Bouquet of Songs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=DM+Serif+Display:ital@0;1&family=Caveat:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --cream: #faf5ed;
+    --cream-deep: #f1e8d6;
+    --paper: #fbf6ec;
+    --rose: #d98c9a;
+    --rose-deep: #b86274;
+    --rose-soft: #e8b5be;
+    --blush: #f3d6d6;
+    --sage: #8aa388;
+    --sage-deep: #5d7c5a;
+    --leaf: #6f8e6c;
+    --gold: #c89b4a;
+    --burgundy: #7a2e3b;
+    --ink: #3b2a2a;
+    --ink-soft: #5b4646;
+    --shadow: rgba(122, 46, 59, 0.12);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image:
+      radial-gradient(circle at 20% 20%, rgba(217, 140, 154, 0.08) 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, rgba(138, 163, 136, 0.08) 0%, transparent 50%),
+      radial-gradient(circle at 50% 50%, rgba(200, 155, 74, 0.04) 0%, transparent 70%);
+    pointer-events: none; z-index: 0;
+  }
+  body::after {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+    opacity: 0.18; mix-blend-mode: multiply; pointer-events: none; z-index: 0;
+  }
+
+  /* ===== Welcome screen ===== */
+  .welcome {
+    position: fixed; inset: 0;
+    z-index: 1000;
+    background: var(--cream);
+    display: flex; align-items: center; justify-content: center;
+    padding: 24px;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+  }
+  .welcome.gone { opacity: 0; visibility: hidden; pointer-events: none; }
+  .welcome-inner {
+    text-align: center;
+    max-width: 560px;
+    position: relative;
+    animation: fadeUp 1.2s ease-out 0.2s both;
+  }
+  .welcome-bouquet-left, .welcome-bouquet-right {
+    position: absolute;
+    width: 130px; height: 200px;
+    top: 50%;
+    opacity: 0.85;
+    pointer-events: none;
+    animation: fadeIn 1.4s ease-out 0.6s both;
+  }
+  .welcome-bouquet-left { left: -170px; transform: translateY(-50%) scaleX(-1); }
+  .welcome-bouquet-right { right: -170px; transform: translateY(-50%); }
+  @media (max-width: 820px) {
+    .welcome-bouquet-left, .welcome-bouquet-right { display: none; }
+  }
+  .welcome-eyebrow {
+    font-family: 'Caveat', cursive;
+    font-size: 30px;
+    color: var(--rose-deep);
+    transform: rotate(-2deg);
+    display: inline-block;
+    margin-bottom: 4px;
+  }
+  .welcome-title {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: clamp(56px, 10vw, 104px);
+    color: var(--burgundy);
+    line-height: 0.95;
+    margin: 6px 0 18px;
+    letter-spacing: -0.01em;
+  }
+  .welcome-title .small {
+    font-size: 0.28em;
+    color: var(--sage-deep);
+    font-style: italic;
+    display: block;
+    margin-top: 14px;
+    letter-spacing: 0.06em;
+  }
+  .welcome-body {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(18px, 2.3vw, 22px);
+    color: var(--ink-soft);
+    line-height: 1.55;
+    margin: 0 auto 30px;
+    max-width: 460px;
+  }
+  .welcome-divider {
+    display: flex; align-items: center; justify-content: center;
+    gap: 14px; margin: 20px auto 30px; color: var(--rose);
+  }
+  .welcome-divider::before, .welcome-divider::after {
+    content: ''; width: 60px; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--rose-soft), transparent);
+  }
+  .welcome-divider svg { width: 22px; height: 22px; }
+
+  .enter-btn {
+    display: inline-flex; align-items: center; gap: 12px;
+    padding: 16px 36px;
+    background: var(--burgundy);
+    color: var(--paper);
+    border: none;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: 19px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 999px;
+    box-shadow: 0 8px 22px rgba(122, 46, 59, 0.28);
+    transition: all 0.4s;
+    position: relative;
+  }
+  .enter-btn::before {
+    content: ''; position: absolute; inset: -6px;
+    border: 1px solid var(--rose-soft);
+    border-radius: 999px;
+    opacity: 0.5;
+    transition: all 0.4s;
+  }
+  .enter-btn:hover {
+    background: var(--rose-deep);
+    transform: translateY(-3px);
+    box-shadow: 0 14px 30px rgba(122, 46, 59, 0.38);
+  }
+  .enter-btn:hover::before { inset: -10px; opacity: 0.8; }
+  .enter-btn svg { width: 16px; height: 16px; transition: transform 0.4s; }
+  .enter-btn:hover svg { transform: translateX(4px); }
+  .welcome-foot {
+    margin-top: 22px;
+    font-family: 'Caveat', cursive;
+    font-size: 20px;
+    color: var(--ink-soft);
+    opacity: 0.85;
+  }
+
+  /* ===== Petals ===== */
+  .petals { position: fixed; inset: 0; pointer-events: none; z-index: 1; overflow: hidden; }
+  .petal {
+    position: absolute; top: -40px;
+    width: 18px; height: 18px; opacity: 0;
+    animation: drift linear infinite;
+  }
+  .petal svg { width: 100%; height: 100%; display: block; }
+  @keyframes drift {
+    0%   { transform: translate3d(0, -40px, 0) rotate(0deg); opacity: 0; }
+    10%  { opacity: 0.7; }
+    90%  { opacity: 0.7; }
+    100% { transform: translate3d(40px, 105vh, 0) rotate(540deg); opacity: 0; }
+  }
+
+  /* ===== Views: home / mood ===== */
+  [data-view] { display: none; }
+  body.view-home [data-view="home"] { display: block; }
+  body.view-mood [data-view="mood"] { display: block; }
+
+  main {
+    position: relative;
+    z-index: 2;
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 60px 28px 80px;
+  }
+
+  /* Garland */
+  .garland {
+    width: 100%; max-width: 520px;
+    margin: 0 auto 18px; display: block;
+    opacity: 0;
+  }
+  body.entered main > .garland { animation: fadeIn 1.2s ease-out both; }
+
+  header { text-align: center; margin-bottom: 56px; opacity: 0; }
+  body.entered .home-header { animation: fadeIn 1s ease-out 0.2s both; }
+
+  .eyebrow {
+    font-family: 'Caveat', cursive;
+    font-size: 28px; color: var(--rose-deep);
+    margin-bottom: 8px;
+    transform: rotate(-2deg);
+    display: inline-block;
+  }
+
+  h1 {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(48px, 8vw, 84px);
+    line-height: 0.95;
+    color: var(--burgundy);
+    margin: 4px 0 14px;
+    letter-spacing: -0.01em;
+  }
+
+  .subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 22px;
+    color: var(--ink-soft);
+    max-width: 460px;
+    margin: 14px auto 0;
+    line-height: 1.45;
+  }
+
+  .divider {
+    display: flex; align-items: center; justify-content: center;
+    gap: 14px; margin: 28px auto 0; color: var(--rose);
+  }
+  .divider::before, .divider::after {
+    content: ''; width: 60px; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--rose-soft), transparent);
+  }
+  .divider svg { width: 22px; height: 22px; }
+
+  .prompt {
+    text-align: center;
+    margin: 8px 0 36px;
+    font-family: 'Caveat', cursive;
+    font-size: 26px;
+    color: var(--ink-soft);
+    opacity: 0;
+  }
+  body.entered .prompt { animation: fadeIn 1s ease-out 0.6s both; }
+
+  /* mood bouquet (the 10 flowers grid) */
+  .bouquet {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 28px 10px;
+    margin: 0 auto 48px;
+    max-width: 880px;
+  }
+  @media (max-width: 900px) {
+    .bouquet { grid-template-columns: repeat(3, 1fr); gap: 24px 14px; max-width: 600px; }
+  }
+  @media (max-width: 600px) {
+    .bouquet { grid-template-columns: repeat(2, 1fr); gap: 20px 14px; max-width: 400px; }
+  }
+
+  .flower {
+    position: relative;
+    background: none; border: none; cursor: pointer;
+    padding: 18px 10px 22px;
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
+    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    opacity: 0;
+  }
+  body.entered .flower {
+    animation: bloomIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+  body.entered .flower:nth-child(1)  { animation-delay: 0.7s; }
+  body.entered .flower:nth-child(2)  { animation-delay: 0.8s; }
+  body.entered .flower:nth-child(3)  { animation-delay: 0.9s; }
+  body.entered .flower:nth-child(4)  { animation-delay: 1.0s; }
+  body.entered .flower:nth-child(5)  { animation-delay: 1.1s; }
+  body.entered .flower:nth-child(6)  { animation-delay: 1.2s; }
+  body.entered .flower:nth-child(7)  { animation-delay: 1.3s; }
+  body.entered .flower:nth-child(8)  { animation-delay: 1.4s; }
+  body.entered .flower:nth-child(9)  { animation-delay: 1.5s; }
+  body.entered .flower:nth-child(10) { animation-delay: 1.6s; }
+
+  @keyframes bloomIn {
+    0%   { opacity: 0; transform: scale(0.4) rotate(-20deg); }
+    100% { opacity: 1; transform: scale(1) rotate(0deg); }
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .flower:hover { transform: translateY(-6px) rotate(-2deg); }
+  .flower:hover .stem { animation: sway 0.8s ease-in-out infinite alternate; }
+  .flower:active { transform: scale(0.95); }
+  @keyframes sway {
+    from { transform: rotate(-3deg); }
+    to   { transform: rotate(3deg); }
+  }
+
+  .stem {
+    width: 110px; height: 130px;
+    transition: filter 0.4s;
+    transform-origin: bottom center;
+  }
+  .flower:hover .stem { filter: drop-shadow(0 6px 12px var(--shadow)); }
+  @media (max-width: 600px) { .stem { width: 95px; height: 115px; } }
+
+  .label {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: 22px;
+    color: var(--burgundy);
+    letter-spacing: 0.01em;
+    text-align: center;
+    transition: color 0.3s;
+  }
+  .flower:hover .label { color: var(--rose-deep); }
+
+  /* ===== Mood page ===== */
+  .back-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: none; border: 1px solid var(--rose-soft);
+    color: var(--rose-deep);
+    padding: 8px 18px 8px 14px;
+    border-radius: 999px;
+    cursor: pointer;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 17px;
+    letter-spacing: 0.08em;
+    transition: all 0.3s;
+    margin-bottom: 28px;
+  }
+  .back-btn:hover {
+    background: var(--rose-soft);
+    color: var(--paper);
+    transform: translateX(-3px);
+  }
+  .back-btn svg { width: 14px; height: 14px; }
+
+  .mood-hero {
+    text-align: center;
+    margin-bottom: 28px;
+    animation: fadeUp 0.7s ease-out both;
+  }
+  .mood-hero .stem-hero {
+    width: 130px; height: 150px;
+    margin: 0 auto;
+  }
+  .mood-hero .mood-eyebrow {
+    font-family: 'Caveat', cursive;
+    font-size: 26px;
+    color: var(--rose-deep);
+    transform: rotate(-2deg);
+    display: inline-block;
+    margin-top: 6px;
+  }
+  .mood-hero h2 {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(36px, 6vw, 56px);
+    line-height: 1.05;
+    color: var(--burgundy);
+    margin: 4px auto 8px;
+    letter-spacing: -0.01em;
+    max-width: 620px;
+  }
+  .small-divider {
+    width: 60px; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--rose), transparent);
+    margin: 18px auto 26px;
+  }
+
+  /* ===== Music Player ===== */
+  .player {
+    background: var(--paper);
+    border-radius: 12px;
+    padding: 18px;
+    margin: 0 auto 28px;
+    max-width: 620px;
+    box-shadow: 0 10px 30px rgba(122, 46, 59, 0.12), 0 0 0 1px rgba(200, 155, 74, 0.18) inset;
+    position: relative;
+    animation: fadeUp 0.7s ease-out 0.15s both;
+  }
+  .player::before {
+    content: 'now playing';
+    position: absolute;
+    top: -10px; left: 22px;
+    background: var(--cream);
+    padding: 0 10px;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 12px;
+    letter-spacing: 0.32em;
+    color: var(--sage-deep);
+    text-transform: uppercase;
+  }
+  .player-frame-wrap {
+    aspect-ratio: 16/9;
+    background: #2a1a1a;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 14px;
+  }
+  .player-frame-wrap iframe {
+    width: 100%; height: 100%; border: 0; display: block;
+  }
+  .player-meta {
+    display: flex; align-items: center; gap: 14px;
+    padding: 0 4px;
+  }
+  .player-meta .now-info { flex: 1; min-width: 0; }
+  .player-meta .now-title {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: 22px;
+    color: var(--burgundy);
+    line-height: 1.2;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .player-meta .now-artist {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 15px;
+    color: var(--ink-soft);
+    line-height: 1.3;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .player-meta .now-yt {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--cream-deep);
+    color: var(--burgundy);
+    padding: 8px 14px;
+    border-radius: 999px;
+    text-decoration: none;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 14px;
+    letter-spacing: 0.06em;
+    transition: all 0.3s;
+    flex-shrink: 0;
+  }
+  .player-meta .now-yt:hover {
+    background: var(--burgundy);
+    color: var(--paper);
+    transform: translateY(-2px);
+  }
+  .player-meta .now-yt svg { width: 14px; height: 14px; }
+
+  /* ===== Playlist ===== */
+  .playlist {
+    background: var(--paper);
+    border-radius: 12px;
+    padding: 28px 24px 24px;
+    margin: 0 auto 28px;
+    max-width: 620px;
+    box-shadow: 0 8px 24px rgba(122, 46, 59, 0.08), 0 0 0 1px rgba(200, 155, 74, 0.15) inset;
+    animation: fadeUp 0.7s ease-out 0.3s both;
+  }
+  .playlist-head { text-align: center; margin-bottom: 18px; }
+  .playlist-head .tag {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.32em;
+    color: var(--sage-deep);
+    margin-bottom: 4px;
+  }
+  .playlist-head .count {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: 22px;
+    color: var(--burgundy);
+  }
+
+  .tracks {
+    list-style: none;
+    border-top: 1px dashed var(--rose-soft);
+  }
+  .track {
+    display: grid;
+    grid-template-columns: 28px 1fr auto;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 6px;
+    border-bottom: 1px dashed var(--rose-soft);
+    transition: background 0.25s, padding-left 0.25s;
+    position: relative;
+    cursor: pointer;
+    color: var(--ink);
+  }
+  .track:hover { background: rgba(243, 214, 214, 0.4); padding-left: 14px; }
+  .track:hover .track-play {
+    background: var(--burgundy);
+    color: var(--paper);
+    transform: scale(1.08);
+  }
+  .track.playing {
+    background: rgba(232, 181, 190, 0.35);
+    padding-left: 14px;
+  }
+  .track.playing .track-num::before {
+    content: '♪ '; color: var(--burgundy);
+  }
+  .track.playing .track-play {
+    background: var(--burgundy);
+    color: var(--paper);
+  }
+  .track-num {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: 18px;
+    color: var(--rose-deep);
+    text-align: center;
+    opacity: 0.85;
+  }
+  .track-info { min-width: 0; display: flex; flex-direction: column; }
+  .track-title {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: 20px;
+    color: var(--burgundy);
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .track-artist {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .track-play {
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--cream-deep);
+    color: var(--burgundy);
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    flex-shrink: 0;
+  }
+  .track-play svg { width: 12px; height: 12px; margin-left: 2px; }
+
+  /* Note */
+  .note-card {
+    max-width: 620px;
+    margin: 0 auto 28px;
+    background: rgba(243, 214, 214, 0.5);
+    border-left: 3px solid var(--rose);
+    padding: 24px 22px 22px 28px;
+    border-radius: 4px;
+    position: relative;
+    animation: fadeUp 0.7s ease-out 0.45s both;
+  }
+  .note-card::before {
+    content: '"';
+    position: absolute;
+    top: -10px; left: 14px;
+    font-family: 'DM Serif Display', serif;
+    font-size: 60px;
+    color: var(--rose);
+    line-height: 1;
+  }
+  .note-card p {
+    font-family: 'Caveat', cursive;
+    font-size: 23px;
+    line-height: 1.45;
+    color: var(--ink);
+  }
+  .signoff {
+    margin-top: 18px; text-align: right;
+    font-family: 'Caveat', cursive;
+    font-size: 22px;
+    color: var(--ink-soft);
+    transform: rotate(-1.5deg);
+  }
+
+  footer { text-align: center; margin-top: 60px; opacity: 0; }
+  body.entered footer { animation: fadeIn 1s ease-out 1.8s both; }
+  footer .garland { max-width: 360px; opacity: 0.7; transform: scaleY(-1); }
+  footer p {
+    font-family: 'Caveat', cursive;
+    font-size: 22px;
+    color: var(--sage-deep);
+    margin-top: 8px;
+  }
+
+  ::selection { background: var(--rose-soft); color: var(--burgundy); }
+</style>
+</head>
+<body class="view-home">
+
+<!-- ========== Welcome screen ========== -->
+<div class="welcome" id="welcome">
+  <div class="welcome-inner">
+    <svg class="welcome-bouquet-left" viewBox="0 0 130 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M65,200 Q65,140 60,90 Q58,60 65,30" stroke="#6f8e6c" stroke-width="2" fill="none"/>
+      <path d="M65,150 Q40,130 30,110" stroke="#6f8e6c" stroke-width="1.5" fill="none"/>
+      <path d="M65,120 Q90,100 100,80" stroke="#6f8e6c" stroke-width="1.5" fill="none"/>
+      <ellipse cx="40" cy="130" rx="14" ry="5" fill="#8aa388" transform="rotate(-30 40 130)"/>
+      <ellipse cx="92" cy="92" rx="13" ry="4.5" fill="#5d7c5a" transform="rotate(40 92 92)"/>
+      <ellipse cx="50" cy="170" rx="12" ry="4" fill="#8aa388" transform="rotate(-15 50 170)"/>
+      <g transform="translate(65,28)"><circle r="14" fill="#d98c9a"/><circle r="10" fill="#b86274"/><circle r="6" fill="#7a2e3b"/></g>
+      <g transform="translate(28,108)"><circle r="9" fill="#e8b5be"/><circle r="5" fill="#b86274"/></g>
+      <g transform="translate(102,78)"><circle r="8" fill="#d98c9a"/><circle r="4" fill="#7a2e3b"/></g>
+      <g transform="translate(50,60)"><circle r="6" fill="#f3d6d6"/><circle r="3" fill="#b86274"/></g>
+      <circle cx="80" cy="50" r="3" fill="#c89b4a"/>
+      <circle cx="35" cy="78" r="2.5" fill="#c89b4a"/>
+    </svg>
+    <svg class="welcome-bouquet-right" viewBox="0 0 130 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M65,200 Q65,140 60,90 Q58,60 65,30" stroke="#6f8e6c" stroke-width="2" fill="none"/>
+      <path d="M65,150 Q40,130 30,110" stroke="#6f8e6c" stroke-width="1.5" fill="none"/>
+      <path d="M65,120 Q90,100 100,80" stroke="#6f8e6c" stroke-width="1.5" fill="none"/>
+      <ellipse cx="40" cy="130" rx="14" ry="5" fill="#8aa388" transform="rotate(-30 40 130)"/>
+      <ellipse cx="92" cy="92" rx="13" ry="4.5" fill="#5d7c5a" transform="rotate(40 92 92)"/>
+      <ellipse cx="50" cy="170" rx="12" ry="4" fill="#8aa388" transform="rotate(-15 50 170)"/>
+      <g transform="translate(65,28)"><circle r="14" fill="#d98c9a"/><circle r="10" fill="#b86274"/><circle r="6" fill="#7a2e3b"/></g>
+      <g transform="translate(28,108)"><circle r="9" fill="#e8b5be"/><circle r="5" fill="#b86274"/></g>
+      <g transform="translate(102,78)"><circle r="8" fill="#d98c9a"/><circle r="4" fill="#7a2e3b"/></g>
+      <g transform="translate(50,60)"><circle r="6" fill="#f3d6d6"/><circle r="3" fill="#b86274"/></g>
+      <circle cx="80" cy="50" r="3" fill="#c89b4a"/>
+      <circle cx="35" cy="78" r="2.5" fill="#c89b4a"/>
+    </svg>
+
+    <span class="welcome-eyebrow">hi, you ✿</span>
+    <h1 class="welcome-title">
+      For Isha
+      <span class="small">~ a little bouquet of songs ~</span>
+    </h1>
+    <p class="welcome-body">
+      I made you something soft.<br/>
+      A small bouquet of moods — one flower for every feeling you might wear today.
+      Pick one and a tiny playlist will bloom, with a little note tucked in.
+      <br/><br/>
+      Take your time. No rush, no rules.
+    </p>
+    <div class="welcome-divider">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M12 2C10 6 6 8 2 8c4 2 6 6 6 10 0-4 4-6 8-6-4 0-6-4-4-10z" opacity="0.7"/>
+        <circle cx="12" cy="10" r="2" fill="#c89b4a"/>
+      </svg>
+    </div>
+    <button class="enter-btn" id="enterBtn">
+      Step inside
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+    <p class="welcome-foot">— made for you, slowly · J</p>
+  </div>
+</div>
+
+<!-- floating petals -->
+<div class="petals" id="petals"></div>
+
+<!-- ============ HOME VIEW ============ -->
+<main data-view="home">
+  <svg class="garland" viewBox="0 0 520 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M10,40 Q130,10 260,40 T510,40" stroke="#6f8e6c" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    <g fill="#8aa388">
+      <ellipse cx="60" cy="32" rx="10" ry="4" transform="rotate(-25 60 32)"/>
+      <ellipse cx="120" cy="22" rx="9" ry="3.5" transform="rotate(20 120 22)"/>
+      <ellipse cx="200" cy="20" rx="11" ry="4" transform="rotate(-15 200 20)"/>
+      <ellipse cx="320" cy="22" rx="9" ry="3.5" transform="rotate(25 320 22)"/>
+      <ellipse cx="400" cy="30" rx="10" ry="4" transform="rotate(-20 400 30)"/>
+      <ellipse cx="470" cy="42" rx="9" ry="3.5" transform="rotate(15 470 42)"/>
+    </g>
+    <g>
+      <circle cx="40" cy="42" r="7" fill="#d98c9a"/>
+      <circle cx="40" cy="42" r="3" fill="#b86274"/>
+      <circle cx="160" cy="25" r="6" fill="#e8b5be"/>
+      <circle cx="160" cy="25" r="2.5" fill="#b86274"/>
+      <circle cx="260" cy="18" r="8" fill="#d98c9a"/>
+      <circle cx="260" cy="18" r="3.5" fill="#7a2e3b"/>
+      <circle cx="360" cy="25" r="6" fill="#e8b5be"/>
+      <circle cx="360" cy="25" r="2.5" fill="#b86274"/>
+      <circle cx="440" cy="36" r="7" fill="#d98c9a"/>
+      <circle cx="440" cy="36" r="3" fill="#b86274"/>
+    </g>
+    <g fill="#c89b4a" opacity="0.7">
+      <circle cx="90" cy="50" r="2"/>
+      <circle cx="220" cy="45" r="2"/>
+      <circle cx="300" cy="48" r="2"/>
+      <circle cx="380" cy="45" r="2"/>
+    </g>
+  </svg>
+
+  <header class="home-header">
+    <span class="eyebrow">a little something, just for you</span>
+    <h1>For Isha</h1>
+    <p class="subtitle">a tiny bouquet of moods — pick the flower that feels like today, and a playlist will bloom.</p>
+    <div class="divider">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M12 2C10 6 6 8 2 8c4 2 6 6 6 10 0-4 4-6 8-6-4 0-6-4-4-10z" opacity="0.7"/>
+        <circle cx="12" cy="10" r="2" fill="#c89b4a"/>
+      </svg>
+    </div>
+  </header>
+
+  <p class="prompt">how are you feeling today, sunshine?</p>
+
+  <section class="bouquet" id="bouquet"></section>
+</main>
+
+<!-- ============ MOOD VIEW ============ -->
+<main data-view="mood" id="moodView">
+  <button class="back-btn" id="backBtn">
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M19 12H5M12 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    back to the bouquet
+  </button>
+
+  <div class="mood-hero" id="moodHero"></div>
+  <div class="small-divider"></div>
+
+  <!-- Music player -->
+  <div class="player" id="player">
+    <div class="player-frame-wrap">
+      <iframe id="ytFrame" src="" title="Music player" frameborder="0"
+        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen></iframe>
+    </div>
+    <div class="player-meta">
+      <div class="now-info">
+        <div class="now-title" id="nowTitle"></div>
+        <div class="now-artist" id="nowArtist"></div>
+      </div>
+      <a class="now-yt" id="nowYt" href="#" target="_blank" rel="noopener noreferrer">
+        Open on YouTube
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M7 17L17 7M17 7H8M17 7v9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+
+  <!-- Playlist -->
+  <div class="playlist">
+    <div class="playlist-head">
+      <div class="tag">a playlist</div>
+      <div class="count">10 songs for the mood</div>
+    </div>
+    <ul class="tracks" id="tracks"></ul>
+  </div>
+
+  <!-- Note -->
+  <div class="note-card">
+    <p id="noteText"></p>
+    <div class="signoff">— always, J ✿</div>
+  </div>
+</main>
+
+<footer>
+  <svg class="garland" viewBox="0 0 520 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M10,40 Q130,10 260,40 T510,40" stroke="#6f8e6c" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    <g fill="#8aa388">
+      <ellipse cx="60" cy="32" rx="10" ry="4" transform="rotate(-25 60 32)"/>
+      <ellipse cx="200" cy="20" rx="11" ry="4" transform="rotate(-15 200 20)"/>
+      <ellipse cx="400" cy="30" rx="10" ry="4" transform="rotate(-20 400 30)"/>
+    </g>
+    <g>
+      <circle cx="40" cy="42" r="6" fill="#d98c9a"/>
+      <circle cx="260" cy="18" r="7" fill="#d98c9a"/>
+      <circle cx="260" cy="18" r="3" fill="#7a2e3b"/>
+      <circle cx="440" cy="36" r="6" fill="#d98c9a"/>
+    </g>
+  </svg>
+  <p>made slowly, with care — for you 🌸</p>
+</footer>
+
+<script>
+  const yt = (q) => `https://www.youtube.com/results?search_query=${encodeURIComponent(q)}`;
+  const ytWatch = (id) => `https://www.youtube.com/watch?v=${id}`;
+  // YouTube embed URL with privacy-enhanced mode and minimal branding
+  const ytEmbed = (id) => `https://www.youtube-nocookie.com/embed/${id}?rel=0&modestbranding=1&iv_load_policy=3`;
+
+  // ---- mood data ----
+  // `id` on a song = YouTube video ID (plays in-page). If missing, opens YouTube search.
+  const moods = [
+    {
+      key: 'happy', label: 'Happy', flower: 'sunflower',
+      title: 'happy as a sunbeam ☀',
+      eyebrow: 'sunshine in song form',
+      note: "your smile is genuinely my favourite weather. these are the songs that play in my head every time i think of you laughing — which is, embarrassingly often.",
+      songs: [
+        { t: 'Tere Vaaste',          a: 'Sachin–Jigar · Varun Jain',                 id: 'X7WXHhokylc' },
+        { t: 'Ilahi',                a: 'Arijit Singh · Yeh Jawaani Hai Deewani' },
+        { t: 'Heeriye',              a: 'Jasleen Royal × Arijit Singh' },
+        { t: 'Pasoori',              a: 'Ali Sethi × Shae Gill' },
+        { t: 'Senorita',             a: 'Maria del Mar Fernandez · ZNMD' },
+        { t: 'Ainvayi Ainvayi',      a: 'Salim Merchant · Band Baaja Baaraat' },
+        { t: 'Subha Hone Na De',     a: 'Mika Singh · Desi Boyz' },
+        { t: 'Badtameez Dil',        a: 'Benny Dayal · YJHD' },
+        { t: 'London Thumakda',      a: 'Labh Janjua, Sonu Kakkar · Queen' },
+        { t: 'Saturday Saturday',    a: 'Indeep Bakshi · Humpty Sharma' }
+      ]
+    },
+    {
+      key: 'romantic', label: 'In Love', flower: 'rose',
+      title: 'soft. dreamy. in love. 🌹',
+      eyebrow: 'a soft little setlist',
+      note: "if my feelings had a tracklist, it would look a lot like this. don't read into it. (okay, read into it.)",
+      songs: [
+        { t: 'Tum Se Hi',             a: 'Mohit Chauhan · Jab We Met',                 id: 'Cb6wuzOurPc' },
+        { t: 'Tum Hi Ho',             a: 'Arijit Singh · Aashiqui 2' },
+        { t: 'Tere Liye',             a: 'Lata Mangeshkar, Roop Kumar Rathod · Veer-Zaara' },
+        { t: 'Pee Loon',              a: 'Mohit Chauhan · Once Upon a Time in Mumbaai' },
+        { t: 'Tujh Mein Rab Dikhta Hai', a: 'Roop Kumar Rathod · Rab Ne Bana Di Jodi' },
+        { t: 'Sajdaa',                a: 'Rahat Fateh Ali Khan, Richa Sharma · My Name Is Khan' },
+        { t: 'Mere Naam Tu',          a: 'Abhay Jodhpurkar · Zero' },
+        { t: 'Pal',                   a: 'Arijit Singh, Shreya Ghoshal · Jalebi' },
+        { t: 'Apna Bana Le',          a: 'Arijit Singh · Bhediya' },
+        { t: 'Jeene Laga Hoon',       a: 'Atif Aslam, Shreya Ghoshal · Ramaiya Vastavaiya' }
+      ]
+    },
+    {
+      key: 'missing', label: 'Missing', flower: 'lotus',
+      title: 'a little distance, a lot of feeling 🌙',
+      eyebrow: 'for the in-between hours',
+      note: "distance is just geography. these songs know the rest. play them once, then again. i'll be here.",
+      songs: [
+        { t: 'Channa Mereya',                 a: 'Arijit Singh · Ae Dil Hai Mushkil',     id: 'bzSTpdcs-EI' },
+        { t: 'Agar Tum Saath Ho',             a: 'Arijit Singh, Alka Yagnik · Tamasha' },
+        { t: 'Tujhe Kitna Chahne Lage',       a: 'Arijit Singh · Kabir Singh' },
+        { t: 'Khairiyat',                     a: 'Arijit Singh · Chhichhore' },
+        { t: 'Tum Mile',                      a: 'Neeraj Shridhar · Tum Mile' },
+        { t: 'Phir Bhi Tumko Chaahunga',      a: 'Arijit Singh · Half Girlfriend' },
+        { t: 'Tera Yaar Hoon Main',           a: 'Arijit Singh · Sonu Ke Titu Ki Sweety' },
+        { t: 'Kahin Toh Hogi Woh',            a: 'Rashid Ali, Vasundhara Das · Jaane Tu Ya Jaane Na' },
+        { t: 'Lutt Putt Gaya',                a: 'Arijit Singh, Shilpa Rao · Dunki' },
+        { t: 'O Saathi',                      a: 'Atif Aslam · Baaghi 2' }
+      ]
+    },
+    {
+      key: 'nostalgic', label: 'Nostalgic', flower: 'daisy',
+      title: 'for the soft, old chapters 🍂',
+      eyebrow: 'remember-when, on repeat',
+      note: "for the moments we'll one day call 'remember when'. i hope a few of them have me in them.",
+      songs: [
+        { t: 'Phir Le Aaya Dil',          a: 'Arijit Singh · Barfi!',                      id: 'k6BnSIs3XUQ' },
+        { t: 'Yeh Honsla',                a: 'Shafqat Amanat Ali · Dor' },
+        { t: 'Iktara',                    a: 'Kavita Seth, Amitabh Bhattacharya · Wake Up Sid' },
+        { t: 'Tum Ho',                    a: 'Mohit Chauhan · Rockstar' },
+        { t: 'Kabhi Kabhi Aditi',         a: 'Rashid Ali · Jaane Tu Ya Jaane Na' },
+        { t: 'Yeh Jo Des Hai Tera',       a: 'A.R. Rahman · Swades' },
+        { t: 'Lukka Chuppi',              a: 'Lata Mangeshkar, A.R. Rahman · Rang De Basanti' },
+        { t: 'Phir Se Ud Chala',          a: 'Mohit Chauhan · Rockstar' },
+        { t: 'Tum Itna Jo Muskura Rahe Ho', a: 'Jagjit Singh · Arth' },
+        { t: 'Pyar Hua Chupke Se',        a: 'Kavita Krishnamurthy · 1942 A Love Story' }
+      ]
+    },
+    {
+      key: 'dreamy', label: 'Dreamy', flower: 'cherry',
+      title: 'somewhere between clouds and chai 🌸',
+      eyebrow: 'float-mode, activated',
+      note: "press play, close your eyes, and float. i'll meet you somewhere in the chorus.",
+      songs: [
+        { t: 'Raabta',                a: 'Arijit Singh · Agent Vinod',                    id: 'HDVw7Y6uAws' },
+        { t: 'Manja',                 a: 'Amit Trivedi · Kai Po Che' },
+        { t: 'Sham',                  a: 'Amit Trivedi · Aisha' },
+        { t: 'Khwabon Ke Parinday',   a: 'Alyssa Mendonsa, Mohit Chauhan · ZNMD' },
+        { t: 'Kaun Tujhe',            a: 'Palak Muchhal · M.S. Dhoni' },
+        { t: 'O Re Piya',             a: 'Rahat Fateh Ali Khan · Aaja Nachle' },
+        { t: 'Tu Hi Re',              a: 'Hariharan, Kavita Krishnamurthy · Bombay' },
+        { t: 'Galliyan (Unplugged)',  a: 'Shraddha Kapoor · Ek Villain' },
+        { t: 'Sajna',                 a: 'Diljit Dosanjh, Jasleen Royal · Phillauri' },
+        { t: 'Kun Faya Kun',          a: 'A.R. Rahman, Mohit Chauhan · Rockstar' }
+      ]
+    },
+    {
+      key: 'playful', label: 'Playful', flower: 'tulip',
+      title: 'twirl-around-the-room kind of mood 🌷',
+      eyebrow: 'press play, lose composure',
+      note: "dance like nobody's watching. especially not me. (okay — maybe a little. you look so happy when you do.)",
+      songs: [
+        { t: 'Heeriye',          a: 'Jasleen Royal × Arijit Singh',                       id: 'RLzC55ai0eo' },
+        { t: 'Kala Chashma',     a: 'Amar Arshi · Baar Baar Dekho' },
+        { t: 'Senorita',         a: 'Maria del Mar Fernandez · ZNMD' },
+        { t: 'Ainvayi Ainvayi',  a: 'Salim Merchant · Band Baaja Baaraat' },
+        { t: 'Gallan Goodiyan',  a: 'Manish Kumar Tipu · Dil Dhadakne Do' },
+        { t: 'Cutiepie',         a: 'Pardeep Singh Sran, Nakash Aziz · ADHM' },
+        { t: 'Saturday Saturday',a: 'Indeep Bakshi · Humpty Sharma' },
+        { t: 'London Thumakda',  a: 'Labh Janjua · Queen' },
+        { t: 'Tukur Tukur',      a: 'Arijit Singh, Neha Kakkar · Dilwale' },
+        { t: 'Sweetheart',       a: 'Dev Negi · Kedarnath' }
+      ]
+    },
+    {
+      key: 'reading', label: 'Reading', flower: 'lavender',
+      title: 'a chapter and a cup of something warm 📖',
+      eyebrow: 'pages, paused softly',
+      note: "find the cosy corner. fold a page if you must. let these play soft and slow under whichever world you're in tonight.",
+      songs: [
+        { t: 'Tum Jab Paas',               a: 'Prateek Kuhad',                              id: 'sCP5emCrGEE' },
+        { t: 'Kasoor',                     a: 'Prateek Kuhad' },
+        { t: 'Cold/Mess',                  a: 'Prateek Kuhad' },
+        { t: 'Khone Do',                   a: 'Prateek Kuhad' },
+        { t: 'Rangeele',                   a: 'Anuv Jain' },
+        { t: 'Husn',                       a: 'Anuv Jain' },
+        { t: 'Baarishein',                 a: 'Anuv Jain' },
+        { t: 'Mishri',                     a: 'Anuv Jain' },
+        { t: 'Iktara (Female)',            a: 'Kavita Seth · Wake Up Sid' },
+        { t: 'Phir Le Aaya Dil (Reprise)', a: 'Rekha Bhardwaj · Barfi!' }
+      ]
+    },
+    {
+      key: 'exercise', label: 'Exercise', flower: 'hibiscus',
+      title: 'main character, morning routine ⚡',
+      eyebrow: 'the hype, audible',
+      note: "go run. go lift. go become the version of you that intimidates monday. consider me your hype track in absentia.",
+      songs: [
+        { t: 'Zinda',                a: 'Siddharth Mahadevan · Bhaag Milkha Bhaag',         id: 'fP6MNznzVcQ' },
+        { t: 'Brothers Anthem',      a: 'Vishal Dadlani, Ajay-Atul · Brothers' },
+        { t: 'Sultan (Title Track)', a: 'Sukhwinder Singh, Shadab Faridi · Sultan' },
+        { t: 'Apna Time Aayega',     a: 'Ranveer Singh, Divine · Gully Boy' },
+        { t: 'Sher Aaya Sher',       a: 'Divine · Gully Boy' },
+        { t: 'Malhari',              a: 'Vishal Dadlani · Bajirao Mastani' },
+        { t: 'Mauja Hi Mauja',       a: 'Mika Singh · Jab We Met' },
+        { t: 'Subha Hone Na De',     a: 'Mika Singh · Desi Boyz' },
+        { t: 'Dhaakad',              a: 'Raftaar · Dangal' },
+        { t: 'Bhaag DK Bose',        a: 'Ram Sampath · Delhi Belly' }
+      ]
+    },
+    {
+      key: 'cooking', label: 'Cooking', flower: 'marigold',
+      title: 'kitchen apron, full sass 🍳',
+      eyebrow: 'twirl, taste, repeat',
+      note: "kitchens are the best dance floors. flip the dal, twirl once, taste, twirl again. (leftovers? asking for a friend. the friend is me.)",
+      songs: [
+        { t: 'Mast Magan',        a: 'Arijit Singh, Chinmayi · 2 States',                  id: 'xitd9mEZIHk' },
+        { t: 'Tu Jo Mila',        a: 'KK · Bajrangi Bhaijaan' },
+        { t: 'Bulleya',           a: 'Amit Mishra, Shilpa Rao · ADHM' },
+        { t: 'Saiyaara',          a: 'Mohit Chauhan, Taraannum Mallik · Ek Tha Tiger' },
+        { t: 'Galat Baat Hai',    a: 'Mika Singh, Anushka Manchanda · Main Tera Hero' },
+        { t: 'Phurrr',            a: 'Diplo, Pritam · Jab Harry Met Sejal' },
+        { t: 'Sooraj Dooba Hain', a: 'Arijit Singh, Aditi Singh Sharma · Roy' },
+        { t: 'Kabira',            a: 'Tochi Raina, Rekha Bhardwaj · YJHD' },
+        { t: 'Manwa Laage',       a: 'Arijit Singh, Shreya Ghoshal · Happy New Year' },
+        { t: 'Tu Hi Hai',         a: 'Rahul Mishra · Half Girlfriend' }
+      ]
+    },
+    {
+      key: 'painting', label: 'Painting', flower: 'poppy',
+      title: 'mess, magic, repeat 🎨',
+      eyebrow: 'soundtrack for the splatters',
+      note: "make a mess. make ten. the only rule is play — these songs don't care about clean lines either. show me what you make?",
+      songs: [
+        { t: 'Phir Se Ud Chala',       a: 'Mohit Chauhan · Rockstar',                       id: '-3gQ6HIkRys' },
+        { t: 'Manja',                  a: 'Amit Trivedi · Kai Po Che' },
+        { t: 'Khwabon Ke Parinday',    a: 'Alyssa Mendonsa, Mohit Chauhan · ZNMD' },
+        { t: 'Ilahi',                  a: 'Arijit Singh · YJHD' },
+        { t: 'Patakha Guddi',          a: 'Sultana & Jyoti Nooran · Highway' },
+        { t: 'Nadaan Parindey',        a: 'A.R. Rahman, Mohit Chauhan · Rockstar' },
+        { t: 'Tum Ho',                 a: 'Mohit Chauhan · Rockstar' },
+        { t: 'Sadda Haq',              a: 'Mohit Chauhan · Rockstar' },
+        { t: 'Iktara',                 a: 'Kavita Seth · Wake Up Sid' },
+        { t: 'Kun Faya Kun',           a: 'A.R. Rahman, Mohit Chauhan · Rockstar' }
+      ]
+    }
+  ];
+
+  const moodByKey = Object.fromEntries(moods.map(m => [m.key, m]));
+
+  // ---- SVG flower generators ----
+  function flowerSVG(type) {
+    const stem = `<path d="M55,130 Q52,90 55,55" stroke="#6f8e6c" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+                  <ellipse cx="42" cy="95" rx="14" ry="5" fill="#8aa388" transform="rotate(-25 42 95)"/>
+                  <ellipse cx="68" cy="108" rx="12" ry="4.5" fill="#5d7c5a" transform="rotate(25 68 108)"/>`;
+    switch (type) {
+      case 'sunflower':
+        return `<svg class="stem" viewBox="0 0 110 130" xmlns="http://www.w3.org/2000/svg">
+          ${stem}
+          <g transform="translate(55,40)">
+            ${Array.from({length:14}).map((_,i)=>{
+              const a = (i*360/14);
+              return `<ellipse cx="0" cy="-22" rx="7" ry="14" fill="#e9b94a" transform="rotate(${a})"/>`;
+            }).join('')}
+            <circle r="14" fill="#7a4a2a"/>
+            <defs><radialGradient id="gSun"><stop offset="0" stop-color="#3b2a2a"/><stop offset="1" stop-color="#7a4a2a"/></radialGradient></defs>
+            <circle r="14" fill="url(#gSun)" opacity="0.6"/>
+            ${Array.from({length:8}).map((_,i)=>{
+              const a=(i*45)*Math.PI/180; const x=Math.cos(a)*7, y=Math.sin(a)*7;
+              return `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="1" fill="#3b2a2a"/>`;
+            }).join('')}
+          </g>
+        </svg>`;
+      case 'rose':
+        return `<svg class="stem" viewBox="0 0 110 130" xmlns="http://www.w3.org/2000/svg">
+          ${stem}
+          <g transform="translate(55,40)">
+            ${Array.from({length:6}).map((_,i)=>{
+              const a=i*60;
+              return `<ellipse cx="0" cy="-16" rx="11" ry="16" fill="#d98c9a" opacity="0.9" transform="rotate(${a})"/>`;
+            }).join('')}
+            ${Array.from({length:5}).map((_,i)=>{
+              const a=i*72+18;
+              return `<ellipse cx="0" cy="-10" rx="8" ry="11" fill="#b86274" transform="rotate(${a})"/>`;
+            }).join('')}
+            <circle r="6" fill="#7a2e3b"/>
+            <path d="M-3,-2 Q0,-6 3,-2 Q3,2 0,3 Q-3,2 -3,-2" fill="#5a1f2a"/>
+          </g>
+        </svg>`;
+      case 'lotus':
+        return `<svg class="stem" viewBox="0 0 110 130" xmlns="http://www.w3.org/2000/svg">
+          ${stem}
+          <g transform="translate(55,42)">
+            <ellipse cx="-26" cy="0" rx="11" ry="22" fill="#e8b5be" transform="rotate(-50 -26 0)"/>
+            <ellipse cx="26" cy="0" rx="11" ry="22" fill="#e8b5be" transform="rotate(50 26 0)"/>
+            <ellipse cx="0" cy="-18" rx="11" ry="22" fill="#e8b5be"/>
+            <ellipse cx="-15" cy="2" rx="10" ry="20" fill="#d98c9a" transform="rotate(-25 -15 2)"/>
+            <ellipse cx="15" cy="2" rx="10" ry="20" fill="#d98c9a" transform="rotate(25 15 2)"/>
+            <ellipse cx="0" cy="-6" rx="10" ry="22" fill="#d98c9a"/>
+            <ellipse cx="0" cy="8" rx="9" ry="4" fill="#c89b4a"/>
+            <circle cx="-3" cy="7" r="1.5" fill="#7a4a2a"/>
+            <circle cx="3" cy="8" r="1.5" fill="#7a4a2a"/>
+            <circle cx="0" cy="6" r="1.5" fill="#7a4a2a"/>
+          </g>
+        </svg>`;
+      case 'daisy':
+        return `<svg class="stem" viewBox="0 0 110 130" xmlns="http://www.w3.org/2000/svg">
+          ${stem}
+          <g transform="translate(55,40)">
+            ${Array.from({length:12}).map((_,i)=>{
+              const a=i*30;
+              return `<ellipse cx="0" cy="-18" rx="6" ry="14" fill="#fbf6ec" stroke="#c89b4a" stroke-width="0.8" transform="rotate(${a})"/>`;
+            }).join('')}
+            <circle r="9" fill="#e9b94a"/>
+            <defs><radialGradient id="gDaisy"><stop offset="0" stop-color="#c89b4a"/><stop offset="1" stop-color="#e9b94a"/></radialGradient></defs>
+            <circle r="9" fill="url(#gDaisy)" opacity="0.4"/>
+          </g>
+        </svg>`;
+      case 'cherry':
+        return `<svg class="stem" viewBox="0 0 110 130" xmlns="http://www.w3.org/2000/svg">
+          <path d="M55,130 Q55,90 50,60" stroke="#7a4a2a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <path d="M50,60 Q40,52 30,48" stroke="#7a4a2a" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <path d="M55,80 Q70,72 80,68" stroke="#7a4a2a" stroke-width="2" fill="none" stroke-linecap="round"/>
+          ${blossom(30, 42, 0.9)}
+          ${blossom(55, 35, 1)}
+          ${blossom(80, 56, 0.85)}
+          ${blossom(45, 60, 0.75)}
+          ${blossom(70, 78, 0.7)}
+        </svg>`;
+      case 'tulip':
+        return `<svg class="stem" viewBox="0 0 110 130" xmlns="http://www.w3.org/2000/svg">
+          <path d="M55,130 Q53,90 55,58" stroke="#6f8e6c" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <path d="M55,90 Q35,80 25,55" stroke="#6f8e6c" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <path d="M28,58 Q20,40 28,28" fill="#8aa388"/>
+          <path d="M28,58 Q36,40 28,28" fill="#5d7c5a"/>
+          <g transform="translate(55,40)">
+            <path d="M-14,8 Q-18,-10 -8,-18 Q0,-22 8,-18 Q18,-10 14,8 Z" fill="#d98c9a"/>
+            <path d="M-8,-18 Q-4,-8 0,8 Q4,-8 8,-18" fill="#b86274" opacity="0.7"/>
+            <path d="M-14,8 Q-10,-2 -8,-18" stroke="#7a2e3b" stroke-width="1" fill="none" opacity="0.5"/>
+            <path d="M14,8 Q10,-2 8,-18" stroke="#7a2e3b" stroke-width="1" fill="none" opacity="0.5"/>
+          </g>
+        </svg>`;
+      case 'lavender':
+        return `<svg class="stem" viewBox="0 0 110 130" xmlns="http://www.w3.org/2000/svg">
+          <path d="M55,130 Q55,90 55,40" stroke="#6f8e6c" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <ellipse cx="42" cy="95" rx="13" ry="4" fill="#8aa388" transform="rotate(-30 42 95)"/>
+          <ellipse cx="68" cy="108" rx="11" ry="3.5" fill="#5d7c5a" transform="rotate(28 68 108)"/>
+          <g transform="translate(55,15)">
+            ${Array.from({length:9}).map((_,i)=>{
+              const y = i * 4.5;
+              const off = (i % 2 === 0) ? -3 : 3;
+              const hue = i < 3 ? '#a48fc4' : (i < 6 ? '#8a73b8' : '#6e58a1');
+              return `<ellipse cx="${off}" cy="${y}" rx="4.5" ry="3" fill="${hue}" opacity="0.9"/>`;
+            }).join('')}
+            <ellipse cx="0" cy="-3" rx="3" ry="2" fill="#b8a3d4"/>
+          </g>
+        </svg>`;
+      case 'hibiscus':
+        return `<svg class="stem" viewBox="0 0 110 130" xmlns="http://www.w3.org/2000/svg">
+          ${stem}
+          <g transform="translate(55,42)">
+            ${Array.from({length:5}).map((_,i)=>{
+              const a = i * 72;
+              return `<path d="M0,0 Q-8,-12 -4,-22 Q0,-26 4,-22 Q8,-12 0,0 Z" fill="#e05a4a" transform="rotate(${a})"/>`;
+            }).join('')}
+            ${Array.from({length:5}).map((_,i)=>{
+              const a = i * 72;
+              return `<path d="M0,-4 Q-2,-12 0,-20 Q2,-12 0,-4 Z" fill="#f08070" opacity="0.6" transform="rotate(${a})"/>`;
+            }).join('')}
+            <circle r="5" fill="#7a2e3b"/>
+            <line x1="0" y1="0" x2="10" y2="-16" stroke="#c89b4a" stroke-width="1.5" stroke-linecap="round"/>
+            <circle cx="9" cy="-15" r="1.5" fill="#e9b94a"/>
+            <circle cx="11" cy="-17" r="1.5" fill="#e9b94a"/>
+            <circle cx="7" cy="-13" r="1.5" fill="#e9b94a"/>
+          </g>
+        </svg>`;
+      case 'marigold':
+        return `<svg class="stem" viewBox="0 0 110 130" xmlns="http://www.w3.org/2000/svg">
+          ${stem}
+          <g transform="translate(55,40)">
+            ${Array.from({length:14}).map((_,i)=>{
+              const a = i * (360/14);
+              return `<ellipse cx="0" cy="-20" rx="5" ry="9" fill="#e07a2a" transform="rotate(${a})"/>`;
+            }).join('')}
+            ${Array.from({length:11}).map((_,i)=>{
+              const a = i * (360/11) + 16;
+              return `<ellipse cx="0" cy="-15" rx="4.5" ry="8" fill="#e9b94a" transform="rotate(${a})"/>`;
+            }).join('')}
+            ${Array.from({length:9}).map((_,i)=>{
+              const a = i * (360/9);
+              return `<ellipse cx="0" cy="-10" rx="3.5" ry="6" fill="#f0c860" transform="rotate(${a})"/>`;
+            }).join('')}
+            <circle r="4" fill="#c89b4a"/>
+            <circle r="2" fill="#7a4a2a"/>
+          </g>
+        </svg>`;
+      case 'poppy':
+        return `<svg class="stem" viewBox="0 0 110 130" xmlns="http://www.w3.org/2000/svg">
+          <path d="M55,130 Q50,95 58,60 Q60,52 55,42" stroke="#6f8e6c" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <ellipse cx="48" cy="100" rx="11" ry="3.5" fill="#8aa388" transform="rotate(-30 48 100)"/>
+          <ellipse cx="62" cy="80" rx="9" ry="3" fill="#5d7c5a" transform="rotate(35 62 80)"/>
+          <g transform="translate(55,40) rotate(-8)">
+            <ellipse cx="-10" cy="-2" rx="14" ry="16" fill="#d04040" transform="rotate(-25)"/>
+            <ellipse cx="10" cy="-2" rx="14" ry="16" fill="#d04040" transform="rotate(25)"/>
+            <ellipse cx="0" cy="-12" rx="14" ry="14" fill="#e05050"/>
+            <ellipse cx="0" cy="6" rx="13" ry="11" fill="#b83030"/>
+            <ellipse cx="0" cy="-2" rx="9" ry="10" fill="#7a2e3b" opacity="0.35"/>
+            <circle r="5" fill="#2a1a1a"/>
+            ${Array.from({length:10}).map((_,i)=>{
+              const a = (i*36)*Math.PI/180;
+              const r = 6;
+              return `<circle cx="${(Math.cos(a)*r).toFixed(1)}" cy="${(Math.sin(a)*r).toFixed(1)}" r="0.9" fill="#3b2a2a"/>`;
+            }).join('')}
+          </g>
+        </svg>`;
+    }
+    return '';
+  }
+
+  function blossom(cx, cy, scale) {
+    return `<g transform="translate(${cx},${cy}) scale(${scale})">
+      ${Array.from({length:5}).map((_,i)=>{
+        const a=i*72;
+        return `<circle cx="0" cy="-7" r="5" fill="#f3d6d6" stroke="#d98c9a" stroke-width="0.6" transform="rotate(${a})"/>`;
+      }).join('')}
+      <circle r="2" fill="#c89b4a"/>
+      ${Array.from({length:4}).map((_,i)=>{
+        const a=(i*90)*Math.PI/180;
+        return `<line x1="0" y1="0" x2="${(Math.cos(a)*3).toFixed(1)}" y2="${(Math.sin(a)*3).toFixed(1)}" stroke="#7a4a2a" stroke-width="0.6"/>`;
+      }).join('')}
+    </g>`;
+  }
+
+  // ---- render home bouquet ----
+  const bouquet = document.getElementById('bouquet');
+  moods.forEach((m) => {
+    const btn = document.createElement('button');
+    btn.className = 'flower';
+    btn.setAttribute('aria-label', m.label);
+    btn.innerHTML = `${flowerSVG(m.flower)}<span class="label">${m.label}</span>`;
+    btn.addEventListener('click', () => navigateTo(m.key));
+    bouquet.appendChild(btn);
+  });
+
+  // ---- routing ----
+  function setView(name) {
+    document.body.classList.remove('view-home', 'view-mood');
+    document.body.classList.add('view-' + name);
+    window.scrollTo({ top: 0, behavior: 'instant' in window ? 'instant' : 'auto' });
+  }
+
+  function navigateTo(moodKey) {
+    if (moodKey && moodByKey[moodKey]) {
+      location.hash = '#/m/' + moodKey;
+    } else {
+      location.hash = '';
+    }
+  }
+
+  function renderMoodPage(m) {
+    // hero
+    document.getElementById('moodHero').innerHTML = `
+      <div class="stem-hero">${flowerSVG(m.flower)}</div>
+      <span class="mood-eyebrow">${m.eyebrow}</span>
+      <h2>${m.title}</h2>
+    `;
+
+    // player: load featured song (first track with an id; falls back to first track)
+    const featured = m.songs.find(s => s.id) || m.songs[0];
+    loadPlayer(featured);
+
+    // playlist
+    const tracksEl = document.getElementById('tracks');
+    tracksEl.innerHTML = m.songs.map((s, i) => {
+      const num = String(i + 1).padStart(2, '0');
+      return `<li class="track${s === featured ? ' playing' : ''}" data-idx="${i}">
+        <span class="track-num">${num}</span>
+        <span class="track-info">
+          <span class="track-title">${s.t}</span>
+          <span class="track-artist">${s.a}</span>
+        </span>
+        <span class="track-play" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        </span>
+      </li>`;
+    }).join('');
+
+    // click handlers on tracks
+    tracksEl.querySelectorAll('.track').forEach(el => {
+      el.addEventListener('click', () => {
+        const idx = parseInt(el.dataset.idx, 10);
+        const song = m.songs[idx];
+        if (song.id) {
+          loadPlayer(song);
+          // mark playing
+          tracksEl.querySelectorAll('.track').forEach(t => t.classList.remove('playing'));
+          el.classList.add('playing');
+          document.getElementById('player').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        } else {
+          // no in-page id available → open YouTube search in new tab
+          window.open(yt(`${song.t} ${song.a}`), '_blank', 'noopener');
+        }
+      });
+    });
+
+    // note
+    document.getElementById('noteText').textContent = m.note;
+  }
+
+  function loadPlayer(song) {
+    const frame = document.getElementById('ytFrame');
+    const url = song.id ? ytEmbed(song.id) : '';
+    frame.src = url;
+    document.getElementById('nowTitle').textContent = song.t;
+    document.getElementById('nowArtist').textContent = song.a;
+    const ytLink = document.getElementById('nowYt');
+    ytLink.href = song.id ? ytWatch(song.id) : yt(`${song.t} ${song.a}`);
+  }
+
+  function handleRoute() {
+    const h = location.hash || '';
+    const m = h.match(/^#\/m\/([a-z]+)$/);
+    if (m && moodByKey[m[1]]) {
+      renderMoodPage(moodByKey[m[1]]);
+      setView('mood');
+    } else {
+      // home
+      // stop any playing video by clearing iframe src
+      const frame = document.getElementById('ytFrame');
+      if (frame) frame.src = '';
+      setView('home');
+    }
+  }
+  window.addEventListener('hashchange', handleRoute);
+
+  document.getElementById('backBtn').addEventListener('click', () => navigateTo(null));
+
+  // ---- welcome → enter ----
+  document.getElementById('enterBtn').addEventListener('click', () => {
+    document.getElementById('welcome').classList.add('gone');
+    document.body.classList.add('entered');
+    // honour incoming hash (deep-link to mood) if present
+    handleRoute();
+  });
+
+  // also run on load in case there's an initial hash but welcome hasn't been clicked
+  // we keep welcome on top; once user clicks enter, route is handled.
+
+  // ---- petals ----
+  const petalColors = ['#d98c9a', '#e8b5be', '#f3d6d6', '#c89b4a'];
+  const petalsLayer = document.getElementById('petals');
+  function spawnPetal() {
+    const p = document.createElement('div');
+    p.className = 'petal';
+    const size = 10 + Math.random() * 16;
+    p.style.width = size + 'px';
+    p.style.height = size + 'px';
+    p.style.left = (Math.random() * 100) + 'vw';
+    const dur = 10 + Math.random() * 12;
+    p.style.animationDuration = dur + 's';
+    p.style.animationDelay = (Math.random() * -dur) + 's';
+    const color = petalColors[Math.floor(Math.random() * petalColors.length)];
+    p.innerHTML = `<svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+      <path d="M10,2 Q14,6 14,12 Q14,18 10,18 Q6,18 6,12 Q6,6 10,2 Z" fill="${color}" opacity="0.85"/>
+    </svg>`;
+    petalsLayer.appendChild(p);
+  }
+  for (let i = 0; i < 18; i++) spawnPetal();
+</script>
+</body>
+</html>
