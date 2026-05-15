@@ -34,6 +34,8 @@
     font-weight: 400;
     overflow-x: hidden;
     min-height: 100vh;
+    min-height: 100dvh;
+    -webkit-text-size-adjust: 100%;
   }
 
   body::before {
@@ -608,6 +610,102 @@
   }
 
   ::selection { background: var(--rose-soft); color: var(--burgundy); }
+
+  /* ===== Mobile ===== */
+  @media (max-width: 640px) {
+    main { padding: 36px 16px 60px; }
+
+    /* welcome */
+    .welcome { padding: 20px 18px; }
+    .welcome-title { font-size: clamp(44px, 13vw, 84px); }
+    .welcome-title .small { margin-top: 10px; }
+    .welcome-body { font-size: 17px; margin-bottom: 24px; }
+    .welcome-eyebrow { font-size: 24px; }
+    .welcome-divider { margin: 16px auto 22px; }
+    .welcome-divider::before, .welcome-divider::after { width: 40px; }
+    .enter-btn { padding: 14px 28px; font-size: 17px; letter-spacing: 0.1em; }
+    .welcome-foot { font-size: 18px; margin-top: 18px; }
+
+    /* home header */
+    header { margin-bottom: 36px; }
+    .eyebrow { font-size: 24px; }
+    h1 { font-size: clamp(44px, 12vw, 72px); }
+    .subtitle { font-size: 18px; }
+    .divider { margin-top: 22px; }
+    .divider::before, .divider::after { width: 40px; }
+    .prompt { font-size: 22px; margin-bottom: 28px; }
+
+    /* bouquet flowers */
+    .flower { padding: 12px 4px 16px; gap: 6px; }
+    .label { font-size: 19px; }
+
+    /* mood page */
+    .back-btn { font-size: 15px; padding: 7px 14px 7px 12px; margin-bottom: 18px; }
+    .mood-hero { margin-bottom: 18px; }
+    .mood-hero .stem-hero { width: 100px; height: 120px; }
+    .mood-hero .mood-eyebrow { font-size: 22px; }
+    .mood-hero h2 { font-size: clamp(30px, 7vw, 44px); }
+    .small-divider { margin: 14px auto 20px; }
+
+    /* player — stack title/artist above the YouTube button so nothing crowds */
+    .player { padding: 14px; border-radius: 10px; margin-bottom: 22px; }
+    .player::before { font-size: 11px; left: 16px; letter-spacing: 0.28em; }
+    .player-meta {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 10px;
+      padding: 0 2px;
+    }
+    .player-meta .now-info { text-align: center; }
+    .player-meta .now-title { font-size: 19px; white-space: normal; }
+    .player-meta .now-artist { font-size: 14px; white-space: normal; }
+    .player-meta .now-yt { align-self: center; padding: 8px 16px; font-size: 13px; }
+
+    /* playlist */
+    .playlist { padding: 22px 14px 16px; border-radius: 10px; margin-bottom: 22px; }
+    .playlist-head { margin-bottom: 14px; }
+    .playlist-head .tag { font-size: 11px; letter-spacing: 0.28em; }
+    .playlist-head .count { font-size: 19px; }
+    .track { grid-template-columns: 22px 1fr auto; gap: 10px; padding: 11px 4px; }
+    .track:hover, .track.playing { padding-left: 8px; }
+    .track-num { font-size: 16px; }
+    .track-title { font-size: 17px; }
+    .track-artist { font-size: 13px; }
+    .track-play { width: 34px; height: 34px; }
+    .track-play svg { width: 13px; height: 13px; }
+
+    /* note */
+    .note-card { padding: 22px 18px 18px 22px; margin-bottom: 22px; }
+    .note-card::before { font-size: 50px; top: -6px; }
+    .note-card p { font-size: 20px; }
+    .signoff { font-size: 19px; margin-top: 14px; }
+
+    footer { margin-top: 40px; }
+    footer p { font-size: 19px; }
+  }
+
+  @media (max-width: 380px) {
+    main { padding: 28px 12px 48px; }
+    .bouquet { gap: 14px 8px; max-width: 320px; }
+    .stem { width: 84px; height: 102px; }
+    .label { font-size: 17px; }
+    .mood-hero .stem-hero { width: 88px; height: 106px; }
+    .player-meta .now-title { font-size: 17px; }
+    .track-title { font-size: 16px; }
+    .track-artist { font-size: 12.5px; }
+  }
+
+  /* Don't keep hover-stuck styles on touch devices */
+  @media (hover: none) {
+    .flower:hover { transform: none; }
+    .flower:hover .stem { animation: none; filter: none; }
+    .flower:hover .label { color: var(--burgundy); }
+    .track:hover { background: transparent; padding-left: 6px; }
+    .track:hover .track-play { background: var(--cream-deep); color: var(--burgundy); transform: none; }
+    .enter-btn:hover { background: var(--burgundy); transform: none; box-shadow: 0 8px 22px rgba(122, 46, 59, 0.28); }
+    .back-btn:hover { background: transparent; color: var(--rose-deep); transform: none; }
+    .now-yt:hover { background: var(--cream-deep); color: var(--burgundy); transform: none; }
+  }
 </style>
 </head>
 <body class="view-home">
