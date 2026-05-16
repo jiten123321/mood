@@ -34,6 +34,8 @@
     font-weight: 400;
     overflow-x: hidden;
     min-height: 100vh;
+    min-height: 100dvh;
+    -webkit-text-size-adjust: 100%;
   }
 
   body::before {
@@ -608,6 +610,102 @@
   }
 
   ::selection { background: var(--rose-soft); color: var(--burgundy); }
+
+  /* ===== Mobile ===== */
+  @media (max-width: 640px) {
+    main { padding: 36px 16px 60px; }
+
+    /* welcome */
+    .welcome { padding: 20px 18px; }
+    .welcome-title { font-size: clamp(44px, 13vw, 84px); }
+    .welcome-title .small { margin-top: 10px; }
+    .welcome-body { font-size: 17px; margin-bottom: 24px; }
+    .welcome-eyebrow { font-size: 24px; }
+    .welcome-divider { margin: 16px auto 22px; }
+    .welcome-divider::before, .welcome-divider::after { width: 40px; }
+    .enter-btn { padding: 14px 28px; font-size: 17px; letter-spacing: 0.1em; }
+    .welcome-foot { font-size: 18px; margin-top: 18px; }
+
+    /* home header */
+    header { margin-bottom: 36px; }
+    .eyebrow { font-size: 24px; }
+    h1 { font-size: clamp(44px, 12vw, 72px); }
+    .subtitle { font-size: 18px; }
+    .divider { margin-top: 22px; }
+    .divider::before, .divider::after { width: 40px; }
+    .prompt { font-size: 22px; margin-bottom: 28px; }
+
+    /* bouquet flowers */
+    .flower { padding: 12px 4px 16px; gap: 6px; }
+    .label { font-size: 19px; }
+
+    /* mood page */
+    .back-btn { font-size: 15px; padding: 7px 14px 7px 12px; margin-bottom: 18px; }
+    .mood-hero { margin-bottom: 18px; }
+    .mood-hero .stem-hero { width: 100px; height: 120px; }
+    .mood-hero .mood-eyebrow { font-size: 22px; }
+    .mood-hero h2 { font-size: clamp(30px, 7vw, 44px); }
+    .small-divider { margin: 14px auto 20px; }
+
+    /* player — stack title/artist above the YouTube button so nothing crowds */
+    .player { padding: 14px; border-radius: 10px; margin-bottom: 22px; }
+    .player::before { font-size: 11px; left: 16px; letter-spacing: 0.28em; }
+    .player-meta {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 10px;
+      padding: 0 2px;
+    }
+    .player-meta .now-info { text-align: center; }
+    .player-meta .now-title { font-size: 19px; white-space: normal; }
+    .player-meta .now-artist { font-size: 14px; white-space: normal; }
+    .player-meta .now-yt { align-self: center; padding: 8px 16px; font-size: 13px; }
+
+    /* playlist */
+    .playlist { padding: 22px 14px 16px; border-radius: 10px; margin-bottom: 22px; }
+    .playlist-head { margin-bottom: 14px; }
+    .playlist-head .tag { font-size: 11px; letter-spacing: 0.28em; }
+    .playlist-head .count { font-size: 19px; }
+    .track { grid-template-columns: 22px 1fr auto; gap: 10px; padding: 11px 4px; }
+    .track:hover, .track.playing { padding-left: 8px; }
+    .track-num { font-size: 16px; }
+    .track-title { font-size: 17px; }
+    .track-artist { font-size: 13px; }
+    .track-play { width: 34px; height: 34px; }
+    .track-play svg { width: 13px; height: 13px; }
+
+    /* note */
+    .note-card { padding: 22px 18px 18px 22px; margin-bottom: 22px; }
+    .note-card::before { font-size: 50px; top: -6px; }
+    .note-card p { font-size: 20px; }
+    .signoff { font-size: 19px; margin-top: 14px; }
+
+    footer { margin-top: 40px; }
+    footer p { font-size: 19px; }
+  }
+
+  @media (max-width: 380px) {
+    main { padding: 28px 12px 48px; }
+    .bouquet { gap: 14px 8px; max-width: 320px; }
+    .stem { width: 84px; height: 102px; }
+    .label { font-size: 17px; }
+    .mood-hero .stem-hero { width: 88px; height: 106px; }
+    .player-meta .now-title { font-size: 17px; }
+    .track-title { font-size: 16px; }
+    .track-artist { font-size: 12.5px; }
+  }
+
+  /* Don't keep hover-stuck styles on touch devices */
+  @media (hover: none) {
+    .flower:hover { transform: none; }
+    .flower:hover .stem { animation: none; filter: none; }
+    .flower:hover .label { color: var(--burgundy); }
+    .track:hover { background: transparent; padding-left: 6px; }
+    .track:hover .track-play { background: var(--cream-deep); color: var(--burgundy); transform: none; }
+    .enter-btn:hover { background: var(--burgundy); transform: none; box-shadow: 0 8px 22px rgba(122, 46, 59, 0.28); }
+    .back-btn:hover { background: transparent; color: var(--rose-deep); transform: none; }
+    .now-yt:hover { background: var(--cream-deep); color: var(--burgundy); transform: none; }
+  }
 </style>
 </head>
 <body class="view-home">
@@ -798,7 +896,7 @@
   const ytEmbed = (id) => `https://www.youtube-nocookie.com/embed/${id}?rel=0&modestbranding=1&iv_load_policy=3`;
 
   // ---- mood data ----
-  // `id` on a song = YouTube video ID (plays in-page). If missing, opens YouTube search.
+  // `id` on a song = YouTube video ID (plays in-page). If missing, shows an in-page "finding song…" message.
   const moods = [
     {
       key: 'happy', label: 'Happy', flower: 'sunflower',
@@ -807,15 +905,15 @@
       note: "your smile is genuinely my favourite weather. these are the songs that play in my head every time i think of you laughing — which is, embarrassingly often.",
       songs: [
         { t: 'Tere Vaaste',          a: 'Sachin–Jigar · Varun Jain',                 id: 'X7WXHhokylc' },
-        { t: 'Ilahi',                a: 'Arijit Singh · Yeh Jawaani Hai Deewani' },
-        { t: 'Heeriye',              a: 'Jasleen Royal × Arijit Singh' },
-        { t: 'Pasoori',              a: 'Ali Sethi × Shae Gill' },
-        { t: 'Senorita',             a: 'Maria del Mar Fernandez · ZNMD' },
-        { t: 'Ainvayi Ainvayi',      a: 'Salim Merchant · Band Baaja Baaraat' },
-        { t: 'Subha Hone Na De',     a: 'Mika Singh · Desi Boyz' },
-        { t: 'Badtameez Dil',        a: 'Benny Dayal · YJHD' },
-        { t: 'London Thumakda',      a: 'Labh Janjua, Sonu Kakkar · Queen' },
-        { t: 'Saturday Saturday',    a: 'Indeep Bakshi · Humpty Sharma' }
+        { t: 'Ilahi',                a: 'Arijit Singh · Yeh Jawaani Hai Deewani', id: 'fdubeMFwuGs' },
+        { t: 'Heeriye',              a: 'Jasleen Royal × Arijit Singh', id: 'RLzC55ai0eo' },
+        { t: 'Pasoori',              a: 'Ali Sethi × Shae Gill', id: '5Eqb_-j3FDA' },
+        { t: 'Senorita',             a: 'Maria del Mar Fernandez · ZNMD', id: 'PuhOFhmy3BU' },
+        { t: 'Ainvayi Ainvayi',      a: 'Salim Merchant · Band Baaja Baaraat', id: 'pElk1ShPrcE' },
+        { t: 'Subha Hone Na De',     a: 'Mika Singh · Desi Boyz', id: 'Y7G-tYRzwYY' },
+        { t: 'Badtameez Dil',        a: 'Benny Dayal · YJHD', id: 'II2EO3Nw4m0' },
+        { t: 'London Thumakda',      a: 'Labh Janjua, Sonu Kakkar · Queen', id: 'udra3Mfw2oo' },
+        { t: 'Saturday Saturday',    a: 'Indeep Bakshi · Humpty Sharma', id: 'PfuL6eJNqZY' }
       ]
     },
     {
@@ -825,51 +923,15 @@
       note: "if my feelings had a tracklist, it would look a lot like this. don't read into it. (okay, read into it.)",
       songs: [
         { t: 'Tum Se Hi',             a: 'Mohit Chauhan · Jab We Met',                 id: 'Cb6wuzOurPc' },
-        { t: 'Tum Hi Ho',             a: 'Arijit Singh · Aashiqui 2' },
-        { t: 'Tere Liye',             a: 'Lata Mangeshkar, Roop Kumar Rathod · Veer-Zaara' },
-        { t: 'Pee Loon',              a: 'Mohit Chauhan · Once Upon a Time in Mumbaai' },
-        { t: 'Tujh Mein Rab Dikhta Hai', a: 'Roop Kumar Rathod · Rab Ne Bana Di Jodi' },
-        { t: 'Sajdaa',                a: 'Rahat Fateh Ali Khan, Richa Sharma · My Name Is Khan' },
-        { t: 'Mere Naam Tu',          a: 'Abhay Jodhpurkar · Zero' },
-        { t: 'Pal',                   a: 'Arijit Singh, Shreya Ghoshal · Jalebi' },
-        { t: 'Apna Bana Le',          a: 'Arijit Singh · Bhediya' },
-        { t: 'Jeene Laga Hoon',       a: 'Atif Aslam, Shreya Ghoshal · Ramaiya Vastavaiya' }
-      ]
-    },
-    {
-      key: 'missing', label: 'Missing', flower: 'lotus',
-      title: 'a little distance, a lot of feeling 🌙',
-      eyebrow: 'for the in-between hours',
-      note: "distance is just geography. these songs know the rest. play them once, then again. i'll be here.",
-      songs: [
-        { t: 'Channa Mereya',                 a: 'Arijit Singh · Ae Dil Hai Mushkil',     id: 'bzSTpdcs-EI' },
-        { t: 'Agar Tum Saath Ho',             a: 'Arijit Singh, Alka Yagnik · Tamasha' },
-        { t: 'Tujhe Kitna Chahne Lage',       a: 'Arijit Singh · Kabir Singh' },
-        { t: 'Khairiyat',                     a: 'Arijit Singh · Chhichhore' },
-        { t: 'Tum Mile',                      a: 'Neeraj Shridhar · Tum Mile' },
-        { t: 'Phir Bhi Tumko Chaahunga',      a: 'Arijit Singh · Half Girlfriend' },
-        { t: 'Tera Yaar Hoon Main',           a: 'Arijit Singh · Sonu Ke Titu Ki Sweety' },
-        { t: 'Kahin Toh Hogi Woh',            a: 'Rashid Ali, Vasundhara Das · Jaane Tu Ya Jaane Na' },
-        { t: 'Lutt Putt Gaya',                a: 'Arijit Singh, Shilpa Rao · Dunki' },
-        { t: 'O Saathi',                      a: 'Atif Aslam · Baaghi 2' }
-      ]
-    },
-    {
-      key: 'nostalgic', label: 'Nostalgic', flower: 'daisy',
-      title: 'for the soft, old chapters 🍂',
-      eyebrow: 'remember-when, on repeat',
-      note: "for the moments we'll one day call 'remember when'. i hope a few of them have me in them.",
-      songs: [
-        { t: 'Phir Le Aaya Dil',          a: 'Arijit Singh · Barfi!',                      id: 'k6BnSIs3XUQ' },
-        { t: 'Yeh Honsla',                a: 'Shafqat Amanat Ali · Dor' },
-        { t: 'Iktara',                    a: 'Kavita Seth, Amitabh Bhattacharya · Wake Up Sid' },
-        { t: 'Tum Ho',                    a: 'Mohit Chauhan · Rockstar' },
-        { t: 'Kabhi Kabhi Aditi',         a: 'Rashid Ali · Jaane Tu Ya Jaane Na' },
-        { t: 'Yeh Jo Des Hai Tera',       a: 'A.R. Rahman · Swades' },
-        { t: 'Lukka Chuppi',              a: 'Lata Mangeshkar, A.R. Rahman · Rang De Basanti' },
-        { t: 'Phir Se Ud Chala',          a: 'Mohit Chauhan · Rockstar' },
-        { t: 'Tum Itna Jo Muskura Rahe Ho', a: 'Jagjit Singh · Arth' },
-        { t: 'Pyar Hua Chupke Se',        a: 'Kavita Krishnamurthy · 1942 A Love Story' }
+        { t: 'Tum Hi Ho',             a: 'Arijit Singh · Aashiqui 2', id: 'IJq0yyWug1k' },
+        { t: 'Tere Liye',             a: 'Lata Mangeshkar, Roop Kumar Rathod · Veer-Zaara', id: 'jo6iAkSoraY' },
+        { t: 'Pee Loon',              a: 'Mohit Chauhan · Once Upon a Time in Mumbaai', id: 'xo2sJSOxatE' },
+        { t: 'Tujh Mein Rab Dikhta Hai', a: 'Roop Kumar Rathod · Rab Ne Bana Di Jodi', id: 'qoq8B8ThgEM' },
+        { t: 'Sajdaa',                a: 'Rahat Fateh Ali Khan, Richa Sharma · My Name Is Khan', id: '3rPEWcY6Oww' },
+        { t: 'Mere Naam Tu',          a: 'Abhay Jodhpurkar · Zero', id: 'VGPmFSB8qVY' },
+        { t: 'Pal',                   a: 'Arijit Singh, Shreya Ghoshal · Jalebi', id: 'aDFEb_W2t1Y' },
+        { t: 'Apna Bana Le',          a: 'Arijit Singh · Bhediya', id: 'u2NAuswnTKs' },
+        { t: 'Jeene Laga Hoon',       a: 'Atif Aslam, Shreya Ghoshal · Ramaiya Vastavaiya', id: 'pkzOBl1p7y4' }
       ]
     },
     {
@@ -879,15 +941,15 @@
       note: "press play, close your eyes, and float. i'll meet you somewhere in the chorus.",
       songs: [
         { t: 'Raabta',                a: 'Arijit Singh · Agent Vinod',                    id: 'HDVw7Y6uAws' },
-        { t: 'Manja',                 a: 'Amit Trivedi · Kai Po Che' },
-        { t: 'Sham',                  a: 'Amit Trivedi · Aisha' },
-        { t: 'Khwabon Ke Parinday',   a: 'Alyssa Mendonsa, Mohit Chauhan · ZNMD' },
-        { t: 'Kaun Tujhe',            a: 'Palak Muchhal · M.S. Dhoni' },
-        { t: 'O Re Piya',             a: 'Rahat Fateh Ali Khan · Aaja Nachle' },
-        { t: 'Tu Hi Re',              a: 'Hariharan, Kavita Krishnamurthy · Bombay' },
-        { t: 'Galliyan (Unplugged)',  a: 'Shraddha Kapoor · Ek Villain' },
+        { t: 'Manja',                 a: 'Amit Trivedi · Kai Po Che', id: 'k_5ulabiwT8' },
+        { t: 'Sham',                  a: 'Amit Trivedi · Aisha', id: 'VOFm2oB8t98' },
+        { t: 'Khwabon Ke Parinday',   a: 'Alyssa Mendonsa, Mohit Chauhan · ZNMD', id: 'cscdqZUdgCk' },
+        { t: 'Kaun Tujhe',            a: 'Palak Muchhal · M.S. Dhoni', id: 'atVof3pjT-I' },
+        { t: 'O Re Piya',             a: 'Rahat Fateh Ali Khan · Aaja Nachle', id: 'iv7lcUkFVSc' },
+        { t: 'Tu Hi Re',              a: 'Hariharan, Kavita Krishnamurthy · Bombay', id: 'P4NwOb39sTQ' },
+        { t: 'Galliyan (Unplugged)',  a: 'Shraddha Kapoor · Ek Villain', id: 'cfc9d4LA1eE' },
         { t: 'Sajna',                 a: 'Diljit Dosanjh, Jasleen Royal · Phillauri' },
-        { t: 'Kun Faya Kun',          a: 'A.R. Rahman, Mohit Chauhan · Rockstar' }
+        { t: 'Kun Faya Kun',          a: 'A.R. Rahman, Mohit Chauhan · Rockstar', id: 'T94PHkuydcw' }
       ]
     },
     {
@@ -897,15 +959,15 @@
       note: "dance like nobody's watching. especially not me. (okay — maybe a little. you look so happy when you do.)",
       songs: [
         { t: 'Heeriye',          a: 'Jasleen Royal × Arijit Singh',                       id: 'RLzC55ai0eo' },
-        { t: 'Kala Chashma',     a: 'Amar Arshi · Baar Baar Dekho' },
-        { t: 'Senorita',         a: 'Maria del Mar Fernandez · ZNMD' },
-        { t: 'Ainvayi Ainvayi',  a: 'Salim Merchant · Band Baaja Baaraat' },
-        { t: 'Gallan Goodiyan',  a: 'Manish Kumar Tipu · Dil Dhadakne Do' },
-        { t: 'Cutiepie',         a: 'Pardeep Singh Sran, Nakash Aziz · ADHM' },
-        { t: 'Saturday Saturday',a: 'Indeep Bakshi · Humpty Sharma' },
-        { t: 'London Thumakda',  a: 'Labh Janjua · Queen' },
-        { t: 'Tukur Tukur',      a: 'Arijit Singh, Neha Kakkar · Dilwale' },
-        { t: 'Sweetheart',       a: 'Dev Negi · Kedarnath' }
+        { t: 'Kala Chashma',     a: 'Amar Arshi · Baar Baar Dekho', id: 'nIappv5kWc0' },
+        { t: 'Senorita',         a: 'Maria del Mar Fernandez · ZNMD', id: 'PuhOFhmy3BU' },
+        { t: 'Ainvayi Ainvayi',  a: 'Salim Merchant · Band Baaja Baaraat', id: 'pElk1ShPrcE' },
+        { t: 'Gallan Goodiyan',  a: 'Manish Kumar Tipu · Dil Dhadakne Do', id: 'jCEdTq3j-0U' },
+        { t: 'Cutiepie',         a: 'Pardeep Singh Sran, Nakash Aziz · ADHM', id: 'aV32gcY9TaY' },
+        { t: 'Saturday Saturday',a: 'Indeep Bakshi · Humpty Sharma', id: 'PfuL6eJNqZY' },
+        { t: 'London Thumakda',  a: 'Labh Janjua · Queen', id: 'udra3Mfw2oo' },
+        { t: 'Tukur Tukur',      a: 'Arijit Singh, Neha Kakkar · Dilwale', id: '0-ggsgFh5TI' },
+        { t: 'Sweetheart',       a: 'Dev Negi · Kedarnath', id: '58r8MDf5sxQ' }
       ]
     },
     {
@@ -915,15 +977,15 @@
       note: "find the cosy corner. fold a page if you must. let these play soft and slow under whichever world you're in tonight.",
       songs: [
         { t: 'Tum Jab Paas',               a: 'Prateek Kuhad',                              id: 'sCP5emCrGEE' },
-        { t: 'Kasoor',                     a: 'Prateek Kuhad' },
-        { t: 'Cold/Mess',                  a: 'Prateek Kuhad' },
-        { t: 'Khone Do',                   a: 'Prateek Kuhad' },
+        { t: 'Kasoor',                     a: 'Prateek Kuhad', id: 'BmUe3-sfr7E' },
+        { t: 'Cold/Mess',                  a: 'Prateek Kuhad', id: 'Il7Nv270zNk' },
+        { t: 'Khone Do',                   a: 'Prateek Kuhad', id: 'LkbYQOZaXiI' },
         { t: 'Rangeele',                   a: 'Anuv Jain' },
-        { t: 'Husn',                       a: 'Anuv Jain' },
-        { t: 'Baarishein',                 a: 'Anuv Jain' },
-        { t: 'Mishri',                     a: 'Anuv Jain' },
-        { t: 'Iktara (Female)',            a: 'Kavita Seth · Wake Up Sid' },
-        { t: 'Phir Le Aaya Dil (Reprise)', a: 'Rekha Bhardwaj · Barfi!' }
+        { t: 'Husn',                       a: 'Anuv Jain', id: 'gJLVTKhTnog' },
+        { t: 'Baarishein',                 a: 'Anuv Jain', id: 'PJWemSzExXs' },
+        { t: 'Mishri',                     a: 'Anuv Jain', id: '0P3Gt-60yLc' },
+        { t: 'Iktara (Female)',            a: 'Kavita Seth · Wake Up Sid', id: '4sMdGz8rbcs' },
+        { t: 'Phir Le Aaya Dil (Reprise)', a: 'Rekha Bhardwaj · Barfi!', id: '2AO2Utn2eoU' }
       ]
     },
     {
@@ -933,15 +995,15 @@
       note: "go run. go lift. go become the version of you that intimidates monday. consider me your hype track in absentia.",
       songs: [
         { t: 'Zinda',                a: 'Siddharth Mahadevan · Bhaag Milkha Bhaag',         id: 'fP6MNznzVcQ' },
-        { t: 'Brothers Anthem',      a: 'Vishal Dadlani, Ajay-Atul · Brothers' },
-        { t: 'Sultan (Title Track)', a: 'Sukhwinder Singh, Shadab Faridi · Sultan' },
-        { t: 'Apna Time Aayega',     a: 'Ranveer Singh, Divine · Gully Boy' },
-        { t: 'Sher Aaya Sher',       a: 'Divine · Gully Boy' },
-        { t: 'Malhari',              a: 'Vishal Dadlani · Bajirao Mastani' },
-        { t: 'Mauja Hi Mauja',       a: 'Mika Singh · Jab We Met' },
-        { t: 'Subha Hone Na De',     a: 'Mika Singh · Desi Boyz' },
-        { t: 'Dhaakad',              a: 'Raftaar · Dangal' },
-        { t: 'Bhaag DK Bose',        a: 'Ram Sampath · Delhi Belly' }
+        { t: 'Brothers Anthem',      a: 'Vishal Dadlani, Ajay-Atul · Brothers', id: 'IjBAgWKW12Y' },
+        { t: 'Sultan (Title Track)', a: 'Sukhwinder Singh, Shadab Faridi · Sultan', id: 'abiL84EAWSY' },
+        { t: 'Apna Time Aayega',     a: 'Ranveer Singh, Divine · Gully Boy', id: 'jFGKJBPFdUA' },
+        { t: 'Sher Aaya Sher',       a: 'Divine · Gully Boy', id: 'M81wneSjQbA' },
+        { t: 'Malhari',              a: 'Vishal Dadlani · Bajirao Mastani', id: 'l_MyUGq7pgs' },
+        { t: 'Mauja Hi Mauja',       a: 'Mika Singh · Jab We Met', id: 'PaDaoNnOQaM' },
+        { t: 'Subha Hone Na De',     a: 'Mika Singh · Desi Boyz', id: 'Y7G-tYRzwYY' },
+        { t: 'Dhaakad',              a: 'Raftaar · Dangal', id: '0zFoHrvbRu4' },
+        { t: 'Bhaag DK Bose',        a: 'Ram Sampath · Delhi Belly', id: 'vs1IDdap3X4' }
       ]
     },
     {
@@ -951,15 +1013,15 @@
       note: "kitchens are the best dance floors. flip the dal, twirl once, taste, twirl again. (leftovers? asking for a friend. the friend is me.)",
       songs: [
         { t: 'Mast Magan',        a: 'Arijit Singh, Chinmayi · 2 States',                  id: 'xitd9mEZIHk' },
-        { t: 'Tu Jo Mila',        a: 'KK · Bajrangi Bhaijaan' },
-        { t: 'Bulleya',           a: 'Amit Mishra, Shilpa Rao · ADHM' },
-        { t: 'Saiyaara',          a: 'Mohit Chauhan, Taraannum Mallik · Ek Tha Tiger' },
-        { t: 'Galat Baat Hai',    a: 'Mika Singh, Anushka Manchanda · Main Tera Hero' },
-        { t: 'Phurrr',            a: 'Diplo, Pritam · Jab Harry Met Sejal' },
-        { t: 'Sooraj Dooba Hain', a: 'Arijit Singh, Aditi Singh Sharma · Roy' },
-        { t: 'Kabira',            a: 'Tochi Raina, Rekha Bhardwaj · YJHD' },
-        { t: 'Manwa Laage',       a: 'Arijit Singh, Shreya Ghoshal · Happy New Year' },
-        { t: 'Tu Hi Hai',         a: 'Rahul Mishra · Half Girlfriend' }
+        { t: 'Tu Jo Mila',        a: 'KK · Bajrangi Bhaijaan', id: '6DCOjq0omBc' },
+        { t: 'Bulleya',           a: 'Amit Mishra, Shilpa Rao · ADHM', id: 'wTgrZE9RWNY' },
+        { t: 'Saiyaara',          a: 'Mohit Chauhan, Taraannum Mallik · Ek Tha Tiger', id: 'A5pSnIwbpaM' },
+        { t: 'Galat Baat Hai',    a: 'Mika Singh, Anushka Manchanda · Main Tera Hero', id: 'coQ95u7w_18' },
+        { t: 'Phurrr',            a: 'Diplo, Pritam · Jab Harry Met Sejal', id: '0BiJrQBIqWw' },
+        { t: 'Sooraj Dooba Hain', a: 'Arijit Singh, Aditi Singh Sharma · Roy', id: 'nJZcbidTutE' },
+        { t: 'Kabira',            a: 'Tochi Raina, Rekha Bhardwaj · YJHD', id: 'jHNNMj5bNQw' },
+        { t: 'Manwa Laage',       a: 'Arijit Singh, Shreya Ghoshal · Happy New Year', id: '52jQMfVAEEU' },
+        { t: 'Tu Hi Hai',         a: 'Rahul Mishra · Half Girlfriend', id: 'KyMNLIYRsR4' }
       ]
     },
     {
@@ -969,15 +1031,15 @@
       note: "make a mess. make ten. the only rule is play — these songs don't care about clean lines either. show me what you make?",
       songs: [
         { t: 'Phir Se Ud Chala',       a: 'Mohit Chauhan · Rockstar',                       id: '-3gQ6HIkRys' },
-        { t: 'Manja',                  a: 'Amit Trivedi · Kai Po Che' },
-        { t: 'Khwabon Ke Parinday',    a: 'Alyssa Mendonsa, Mohit Chauhan · ZNMD' },
-        { t: 'Ilahi',                  a: 'Arijit Singh · YJHD' },
-        { t: 'Patakha Guddi',          a: 'Sultana & Jyoti Nooran · Highway' },
-        { t: 'Nadaan Parindey',        a: 'A.R. Rahman, Mohit Chauhan · Rockstar' },
-        { t: 'Tum Ho',                 a: 'Mohit Chauhan · Rockstar' },
-        { t: 'Sadda Haq',              a: 'Mohit Chauhan · Rockstar' },
-        { t: 'Iktara',                 a: 'Kavita Seth · Wake Up Sid' },
-        { t: 'Kun Faya Kun',           a: 'A.R. Rahman, Mohit Chauhan · Rockstar' }
+        { t: 'Manja',                  a: 'Amit Trivedi · Kai Po Che', id: 'k_5ulabiwT8' },
+        { t: 'Khwabon Ke Parinday',    a: 'Alyssa Mendonsa, Mohit Chauhan · ZNMD', id: 'cscdqZUdgCk' },
+        { t: 'Ilahi',                  a: 'Arijit Singh · YJHD', id: 'fdubeMFwuGs' },
+        { t: 'Patakha Guddi',          a: 'Sultana & Jyoti Nooran · Highway', id: '8HDTS80dlr4' },
+        { t: 'Nadaan Parindey',        a: 'A.R. Rahman, Mohit Chauhan · Rockstar', id: 'ttIKsnxPrMY' },
+        { t: 'Tum Ho',                 a: 'Mohit Chauhan · Rockstar', id: 'gkCKTuR-ECI' },
+        { t: 'Sadda Haq',              a: 'Mohit Chauhan · Rockstar', id: 'p9DQINKZxWE' },
+        { t: 'Iktara',                 a: 'Kavita Seth · Wake Up Sid', id: '4sMdGz8rbcs' },
+        { t: 'Kun Faya Kun',           a: 'A.R. Rahman, Mohit Chauhan · Rockstar', id: 'T94PHkuydcw' }
       ]
     }
   ];
@@ -1233,8 +1295,11 @@
           el.classList.add('playing');
           document.getElementById('player').scrollIntoView({ behavior: 'smooth', block: 'center' });
         } else {
-          // no in-page id available → open YouTube search in new tab
-          window.open(yt(`${song.t} ${song.a}`), '_blank', 'noopener');
+          // no embeddable video yet — keep the user in-page
+          showFinding(song);
+          tracksEl.querySelectorAll('.track').forEach(t => t.classList.remove('playing'));
+          el.classList.add('playing');
+          document.getElementById('player').scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
       });
     });
@@ -1251,6 +1316,17 @@
     document.getElementById('nowArtist').textContent = song.a;
     const ytLink = document.getElementById('nowYt');
     ytLink.href = song.id ? ytWatch(song.id) : yt(`${song.t} ${song.a}`);
+  }
+
+  // For songs we don't yet have an embeddable video for: keep the user
+  // in the page, show a soft message instead of redirecting to YouTube.
+  function showFinding(song) {
+    const frame = document.getElementById('ytFrame');
+    frame.src = '';
+    document.getElementById('nowTitle').textContent = song.t;
+    document.getElementById('nowArtist').textContent = song.a + ' — finding song…';
+    const ytLink = document.getElementById('nowYt');
+    ytLink.href = yt(`${song.t} ${song.a}`);
   }
 
   function handleRoute() {
