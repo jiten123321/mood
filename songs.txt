@@ -1,7 +1,7 @@
 FOR ISHA — A LITTLE BOUQUET OF SONGS
 ======================================
 
-100 songs, grouped by mood. Paste any YouTube link into your
+90 songs, grouped by mood. Paste any YouTube link into your
 downloader of choice (yt-dlp, cobalt.tools, etc.) to grab the audio.
 
 
@@ -75,30 +75,6 @@ MISSING  —  a little distance, a lot of feeling 🌙
     https://www.youtube.com/watch?v=7CdpHATpXXU
 10. O Saathi — Atif Aslam · Baaghi 2
     https://www.youtube.com/watch?v=GsliJ6AbNpI
-
-
-NOSTALGIC  —  for the soft, old chapters 🍂
-------------------------------------------
- 1. Phir Le Aaya Dil — Arijit Singh · Barfi!
-    https://www.youtube.com/watch?v=k6BnSIs3XUQ
- 2. Yeh Honsla — Shafqat Amanat Ali · Dor
-    https://www.youtube.com/watch?v=W6IQJWqOnBk
- 3. Iktara — Kavita Seth, Amitabh Bhattacharya · Wake Up Sid
-    https://www.youtube.com/watch?v=4sMdGz8rbcs
- 4. Tum Ho — Mohit Chauhan · Rockstar
-    https://www.youtube.com/watch?v=gkCKTuR-ECI
- 5. Kabhi Kabhi Aditi — Rashid Ali · Jaane Tu Ya Jaane Na
-    https://www.youtube.com/watch?v=HIbzXaBdwZw
- 6. Yeh Jo Des Hai Tera — A.R. Rahman · Swades
-    https://www.youtube.com/watch?v=i7hVzQTCF-o
- 7. Lukka Chuppi — Lata Mangeshkar, A.R. Rahman · Rang De Basanti
-    https://www.youtube.com/watch?v=WjjKlwt0UNk
- 8. Phir Se Ud Chala — Mohit Chauhan · Rockstar
-    https://www.youtube.com/watch?v=O3EnBKu56ac
- 9. Tum Itna Jo Muskura Rahe Ho — Jagjit Singh · Arth
-    https://www.youtube.com/watch?v=C8eAKT-zQXk
-10. Pyar Hua Chupke Se — Kavita Krishnamurthy · 1942 A Love Story
-    https://www.youtube.com/watch?v=3NzK5fqZeY8
 
 
 DREAMY  —  somewhere between clouds and chai 🌸
@@ -245,4 +221,4 @@ PAINTING  —  mess, magic, repeat 🎨
     https://www.youtube.com/watch?v=T94PHkuydcw
 
 
-Total: 100 songs across 10 moods.
+Total: 90 songs across 9 moods.
