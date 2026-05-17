@@ -117,6 +117,25 @@
     margin: 0 auto 30px;
     max-width: 460px;
   }
+  .welcome-rose {
+    display: inline-block;
+    font-style: normal;
+    transform: translateY(1px);
+    animation: floaty 4s ease-in-out infinite;
+  }
+  .welcome-muskurao {
+    display: inline-block;
+    font-family: 'Caveat', cursive;
+    font-style: normal;
+    font-size: 1.22em;
+    color: var(--rose-deep);
+    line-height: 1.35;
+    margin-top: 2px;
+  }
+  @keyframes floaty {
+    0%, 100% { transform: translateY(1px) rotate(-4deg); }
+    50%      { transform: translateY(-3px) rotate(4deg); }
+  }
   .welcome-divider {
     display: flex; align-items: center; justify-content: center;
     gap: 14px; margin: 20px auto 30px; color: var(--rose);
@@ -608,6 +627,14 @@
     color: var(--sage-deep);
     margin-top: 8px;
   }
+  footer .footer-muskurao {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: 19px;
+    color: var(--rose-deep);
+    margin-top: 4px;
+    letter-spacing: 0.01em;
+  }
 
   ::selection { background: var(--rose-soft); color: var(--burgundy); }
 
@@ -748,11 +775,10 @@
       <span class="small">~ a little bouquet of songs ~</span>
     </h1>
     <p class="welcome-body">
-      I made you something soft.<br/>
-      A small bouquet of moods — one flower for every feeling you might wear today.
-      Pick one and a tiny playlist will bloom, with a little note tucked in.
+      welcome to a tiny flower e-boutique <span class="welcome-rose">🌷</span> built with too much love, just for you.<br/>
+      one flower for every feeling — a soft little playlist tucked inside every petal.
       <br/><br/>
-      Take your time. No rush, no rules.
+      <span class="welcome-muskurao">agar yeh dekh ke tum thoda sa muskura do —<br/>bas, yahi sab kuch hai.</span>
     </p>
     <div class="welcome-divider">
       <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -808,7 +834,7 @@
   <header class="home-header">
     <span class="eyebrow">a little something, just for you</span>
     <h1>For Isha</h1>
-    <p class="subtitle">a tiny bouquet of moods — pick the flower that feels like today, and a playlist will bloom.</p>
+    <p class="subtitle">a tiny flower e-boutique of moods — pick the one that feels like today, and a soft playlist will bloom. 🌸</p>
     <div class="divider">
       <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
         <path d="M12 2C10 6 6 8 2 8c4 2 6 6 6 10 0-4 4-6 8-6-4 0-6-4-4-10z" opacity="0.7"/>
@@ -886,7 +912,8 @@
       <circle cx="440" cy="36" r="6" fill="#d98c9a"/>
     </g>
   </svg>
-  <p>made slowly, with care — for you 🌸</p>
+  <p class="footer-line">made slowly, with care — for you 🌸</p>
+  <p class="footer-muskurao">tum muskura do, bas — yahi sab kuch hai 🌷</p>
 </footer>
 
 <script>
